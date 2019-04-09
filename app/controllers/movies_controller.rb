@@ -3,16 +3,23 @@ class MoviesController < ApplicationController
 
   def index
     @movies = Movie.all.decorate
+  rescue PairguruAPIException
   end
 
   def show
-    @movie = Movie.find(params[:id])
+    @movie = Movie.find(params[:id]).fetch_additional_data.decorate
+  rescue PairguruAPIException
   end
 
   def send_info
     @movie = Movie.find(params[:id])
     MovieInfoMailer.send_info(current_user, @movie).deliver_now
     redirect_back(fallback_location: root_path, notice: "Email sent with movie info")
+  end
+
+  def fetch_additional_data
+    @movie = Movie.find(params[:id]).fetch_additional_data
+    render json: { plot: @movie.plot, rating: @movie.rating, poster: @movie.poster_url }
   end
 
   def export
