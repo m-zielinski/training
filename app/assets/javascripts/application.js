@@ -13,3 +13,15 @@
 //= require jquery
 //= require jquery_ujs
 //= require_tree .
+
+$(function(){
+    $('.movies').children().each(function() {
+      var movie_id = $(this).attr("class").split("_")[1];
+      $.get( "/api_proxy/" + movie_id, function( data ) {
+        var tr = $(".movie_" + movie_id);
+        tr.find('.rating .badge').html(data["rating"]);
+        tr.find('.plot').html(data["plot"]);
+        tr.find('.poster').attr("src", data["poster"]);
+      });
+    });
+});

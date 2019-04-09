@@ -1,5 +1,18 @@
 %h1= @movie.title
 .jumbotron
   = @movie.description
+.text-center
+  - if @movie.rating
+    .rating
+      Rating:
+      .badge
+        = @movie.rating
+    %br
+- if @movie.plot
+  .plot.well
+    = @movie.plot
+- if @movie.poster
+  .text-center.poster
+    = image_tag @movie.poster_url, alt: @movie.title + " poster"
 - if user_signed_in?
   %p= link_to 'Email me details about this movie', send_info_movie_path(@movie), class: 'btn btn-sm btn-default'

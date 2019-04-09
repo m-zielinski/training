@@ -14,4 +14,13 @@
 
 class Movie < ApplicationRecord
   belongs_to :genre
+  attr_accessor :rating, :plot, :poster
+
+  def fetch_additional_data
+    MovieImporter.call(self)
+  end
+
+  def poster_url
+    MovieImporter.posters_url + poster if poster
+  end
 end

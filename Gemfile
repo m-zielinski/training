@@ -7,6 +7,7 @@ gem "bootstrap-sass"
 gem "devise"
 gem "draper"
 gem "haml-rails"
+gem "httparty"
 gem "jquery-rails"
 gem "sass-rails"
 gem "sqlite3"
@@ -37,5 +38,7 @@ group :development, :test do
 end
 
 group :test do
+  gem "selenium-webdriver"
   gem "shoulda-matchers"
+  gem "webmock"
 end
