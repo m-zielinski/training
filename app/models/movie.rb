@@ -16,6 +16,8 @@ class Movie < ApplicationRecord
   belongs_to :genre
   attr_accessor :rating, :plot, :poster
 
+  validates_with TitleBracketsValidator
+
   def fetch_additional_data
     MovieImporter.call(self)
   end
