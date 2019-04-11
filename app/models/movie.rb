@@ -23,4 +23,15 @@ class Movie < ApplicationRecord
   def poster_url
     MovieImporter.posters_url + poster if poster
   end
+
+  def basic_data
+    { id: id, title: title }
+  end
+
+  def with_genre_counts(genre_counts = {})
+    {
+      id: id, title: title,
+      genre: { id: genre_id, name: genre.name, number_of_movies: genre_counts[genre_id] }
+    }
+  end
 end

@@ -3,7 +3,7 @@ Rails.application.routes.draw do
 
   root "home#welcome"
 
-  get '/api_proxy/:id', to: 'movies#fetch_additional_data', format: :json
+  get "/api_proxy/:id", to: "movies#fetch_additional_data", format: :json
 
   resources :genres, only: :index do
     member do
@@ -17,6 +17,15 @@ Rails.application.routes.draw do
     end
     collection do
       get :export
+    end
+  end
+
+  namespace :api, defaults: { format: "json" } do
+    namespace :v1 do
+      resources :movies, only: [:index, :show]
+    end
+    namespace :v2 do
+      resources :movies, only: [:index, :show]
     end
   end
 end

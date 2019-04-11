@@ -6,7 +6,8 @@ feature "showing movies with full data", :js do
 
   scenario "in list" do
     visit "/movies"
-
+    wait_for_ajax
+    
     expect(page).to have_text("Godfather")
       .and have_text("The aging patriarch of an organized crime dynasty transfers control of his clandestine empire to his reluctant son.")
     expect(page).to have_selector(".plot", count: 2)
