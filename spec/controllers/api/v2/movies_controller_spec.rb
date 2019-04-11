@@ -37,10 +37,10 @@ describe Api::V2::MoviesController do
   end
 
   def sample_record
-    json = JSON.parse(response.body)
-    return json.first if json.is_a? Array
+    @json ||= JSON.parse(response.body)
+    return @json.last if @json.is_a? Array
 
-    json
+    @json
   end
 
   def genre_details

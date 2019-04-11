@@ -5,8 +5,8 @@ require File.expand_path("../config/environment", __dir__)
 require "rspec/rails"
 require "pry"
 require "capybara/rails"
-require "simplecov"
 require "shoulda/matchers"
+require "simplecov"
 require "webmock/rspec"
 
 SimpleCov.start "rails"
@@ -55,6 +55,8 @@ RSpec.configure do |config|
   # The different available types are documented in the features, such as in
   # https://relishapp.com/rspec/rspec-rails/docs
   config.infer_spec_type_from_file_location!
+
+  config.include Devise::Test::IntegrationHelpers, type: :feature
 end
 
 Shoulda::Matchers.configure do |config|

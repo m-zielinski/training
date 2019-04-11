@@ -2,24 +2,31 @@ require "rails_helper"
 
 feature "showing movies with full data", :js do
   let!(:movie) { create(:movie, title: "Godfather") }
-  let!(:other_movie) { create(:movie, title: "Inglourious Basterds") }
 
   scenario "in list" do
     visit "/movies"
+
+    expect_additional_fields_on_page
+
     wait_for_ajax
-    
-    expect(page).to have_text("Godfather")
-      .and have_text("The aging patriarch of an organized crime dynasty transfers control of his clandestine empire to his reluctant son.")
-    expect(page).to have_selector(".plot", count: 2)
-      .and have_selector(".poster", count: 2)
-      .and have_selector(".rating", count: 2)
+    expect_to_see_full_movie_data
   end
 
   scenario "by one" do
     visit "movies/#{movie.id}"
 
+    expect_additional_fields_on_page
+    expect_to_see_full_movie_data
+  end
+
+  def expect_to_see_full_movie_data
     expect(page).to have_text("Godfather")
-      .and have_text("The aging patriarch of an organized crime dynasty transfers control of his clandestine empire to his reluctant son.")
+      .and have_text("The aging patriarch...")
+      .and have_text("9.2")
+    expect(page.find(".poster")["src"]).to have_content "godfather.jpg"
+  end
+
+  def expect_additional_fields_on_page
     expect(page).to have_selector(".plot")
       .and have_selector(".poster")
       .and have_selector(".rating")

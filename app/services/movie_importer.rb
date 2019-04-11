@@ -1,23 +1,29 @@
 class MovieImporter
-  def self.call(movie)
-    response = HTTParty.get(api_endpoint + "movies/" + ERB::Util.url_encode(movie.title))
-    if response.success?
-      attr = response.parsed_response["data"]["attributes"]
-      movie.plot = attr["plot"]
-      movie.rating = attr["rating"]
-      movie.poster = attr["poster"]
-    else
-      raise PairguruAPIException
+  class << self
+    def call(movie)
+      response = HTTParty.get(movie_query(movie), format: :json)
+      if response.success?
+        attr = response.parsed_response["data"]["attributes"]
+        movie.plot = attr["plot"]
+        movie.rating = attr["rating"]
+        movie.poster = attr["poster"]
+      else
+        raise PairguruAPIException
+      end
+      movie
     end
-    movie
-  end
 
-  def self.api_endpoint
-    "https://pairguru-api.herokuapp.com/api/v1/"
-  end
+    def api_endpoint
+      "https://pairguru-api.herokuapp.com/api/v1/"
+    end
 
-  def self.posters_url
-    "https://pairguru-api.herokuapp.com/"
+    def posters_url
+      "https://pairguru-api.herokuapp.com/"
+    end
+
+    def movie_query(movie)
+      api_endpoint + "movies/" + ERB::Util.url_encode(movie.title)
+    end
   end
 end
 
