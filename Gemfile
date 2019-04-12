@@ -4,6 +4,7 @@ gem "rails", "5.2"
 
 gem "annotate"
 gem "bootstrap-sass"
+gem "commontator"
 gem "devise"
 gem "draper"
 gem "haml-rails"

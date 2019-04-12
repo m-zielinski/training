@@ -82,6 +82,9 @@ GEM
       ffi (~> 1.0, >= 1.0.11)
     choice (0.2.0)
     coderay (1.1.2)
+    commontator (5.1.0)
+      jquery-rails
+      rails (>= 5.0)
     concurrent-ruby (1.0.5)
     crack (0.4.3)
       safe_yaml (~> 1.0.0)
@@ -318,6 +321,7 @@ DEPENDENCIES
   bootstrap-sass
   bullet
   capybara
+  commontator
   devise
   draper
   factory_bot_rails

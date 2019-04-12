@@ -5,6 +5,8 @@ Rails.application.routes.draw do
 
   get "/api_proxy/:id", to: "movies#fetch_additional_data", format: :json
 
+  mount Commontator::Engine => '/commontator'
+
   resources :genres, only: :index do
     member do
       get "movies"

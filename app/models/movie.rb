@@ -18,6 +18,8 @@ class Movie < ApplicationRecord
 
   validates_with TitleBracketsValidator
 
+  acts_as_commontable dependent: :destroy
+
   def fetch_additional_data
     MovieImporter.call(self)
   end
