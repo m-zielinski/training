@@ -1,6 +1,6 @@
 module Commontator
   class Comment < ActiveRecord::Base
-    belongs_to :creator, polymorphic: true
+    belongs_to :creator, class_name: "User"
     belongs_to :editor, polymorphic: true, optional: true
     belongs_to :thread
 
