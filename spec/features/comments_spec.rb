@@ -10,13 +10,6 @@ feature "comments", :js do
     visit "movies/#{movie.id}"
   end
 
-  scenario "user not signed-in" do
-    sign_out user
-
-    expect(page).to have_text "Comments"
-    expect(page).not_to have_button "Post Comment"
-  end
-
   scenario "user can post his first comment on the movie" do
     post_comment "I'd really like to see this movie!"
 
@@ -25,13 +18,16 @@ feature "comments", :js do
 
   scenario "user tries to post a second comment on the same movie" do
     post_comment "I'd really like to see this movie!"
-    post_comment "I tried and... no, it sucks!"
 
-    expect(page).not_to have_content "I tried and... no, it sucks!"
+    visit "movies/#{movie.id}"
+    expect(page).not_to have_selector("comment_body")
 
-    click_link "Delete"
+    Commontator::Comment.last.destroy # better click_link "Delete"
+
+    visit "movies/#{movie.id}"
     post_comment "I tried to watch it and... no, it sucks!"
 
+    expect(page).not_to have_content "I'd really like to see this movie!"
     expect(page).to have_content "I tried to watch it and... no, it sucks!"
   end
 

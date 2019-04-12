@@ -25,5 +25,5 @@ $(function(){
       });
     });
 
-    $(".thread_new_comment_link a").click();
+    $(".thread_new_comment_link a").hide().click();
 });

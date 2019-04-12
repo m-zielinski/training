@@ -5,7 +5,6 @@ module Commontator
 
     # GET /threads/1/comments/new
     def new
-puts '---commontator new'
       @comment = Comment.new
       @comment.thread = @thread
       @comment.creator = @user

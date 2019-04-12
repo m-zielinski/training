@@ -10,12 +10,6 @@
            locals: { comment: @new_comment,
                         thread: @thread,
                         per_page: @per_page }) %>");
-<% else %>
-  $("#thread_<%= @thread.id %>_new_comment_form_div").hide();
-
-  $("#thread_<%= @thread.id %>_new_comment_link_div").fadeIn();
 <% end %>
-
-$("#comment_<%= @comment.id.to_s %>_div").hide().fadeIn()[0].scrollIntoView();
 
 <%= javascript_proc %>
