@@ -11,8 +11,7 @@
   <% elsif !user %>
     <p><%= t 'commontator.require_login' %>.</p>
   <% else %>
-    <div id="thread_<%= thread.id %>_new_comment_form_div" class="thread_new_comment_form<%=
-    hidden_class %>">
+    <div id="thread_<%= thread.id %>_new_comment_form_div" class="thread_new_comment_form">
       <% unless @new_comment.nil? %>
         <%= render partial: 'commontator/comments/form',
                    locals: { comment: @new_comment,
