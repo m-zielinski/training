@@ -8,6 +8,7 @@ class MoviesController < ApplicationController
 
   def show
     @movie = Movie.find(params[:id]).fetch_additional_data.decorate
+    commontator_thread_show(@movie)
   rescue PairguruAPIException
   end
 

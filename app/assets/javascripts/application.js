@@ -24,4 +24,6 @@ $(function(){
         tr.find('.poster').attr("src", data["poster"]);
       });
     });
+
+    $(".thread_new_comment_link a").hide().click();
 });
