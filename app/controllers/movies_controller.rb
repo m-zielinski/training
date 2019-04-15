@@ -1,5 +1,5 @@
 class MoviesController < ApplicationController
-  before_action :authenticate_user!, only: [:send_info]
+  before_action :authenticate_user!, only: [:send_info, :export]
 
   def index
     @movies = Movie.all.decorate
@@ -13,8 +13,8 @@ class MoviesController < ApplicationController
 
   def send_info
     @movie = Movie.find(params[:id])
-    MovieInfoMailer.send_info(current_user, @movie).deliver_now
-    redirect_back(fallback_location: root_path, notice: "Email sent with movie info")
+    MovieInfoMailerJob.perform_later(current_user, @movie)
+    redirect_back(fallback_location: root_path, notice: "Email with movie info scheduled")
   end
 
   def fetch_additional_data
@@ -24,7 +24,7 @@ class MoviesController < ApplicationController
 
   def export
     file_path = "tmp/movies.csv"
-    MovieExporter.new.call(current_user, file_path)
-    redirect_to root_path, notice: "Movies exported"
+    MovieExporterJob.perform_later(current_user, file_path)
+    redirect_to root_path, notice: "Export scheduled"
   end
 end
