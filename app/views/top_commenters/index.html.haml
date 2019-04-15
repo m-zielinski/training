@@ -1,0 +1,8 @@
+.row
+  .col-md-8.col-md-offset-2.col-lg-8.col-lg-offset-2
+    %h3 Top Commenters this week
+    %br
+    %ul.list-group
+      - @top_commenters.each_with_index do |commenter, i|
+        %li.list-group-item= "#{i+1}. #{commenter.creator.name}"
+    %br

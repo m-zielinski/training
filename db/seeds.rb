@@ -1,13 +1,14 @@
 require "faker"
+require 'rake'
 
 Rails.logger = Logger.new(STDOUT)
 
 Rails.logger.info "Creating users..."
 
-20.times do |i|
+15.times do |i|
   number = i.zero? ? "" : i + 1
-  name = "user#{number}"
-  email = "#{name}@example.com"
+  name = Faker::Name.name
+  email = Faker::Internet.email
   next if User.exists?(email: email)
   User.create!(
     email: email,
@@ -72,7 +73,7 @@ Rails.logger.info "Creating movies..."
 
 genre_ids = Genre.pluck(:id)
 if Movie.count < 100
-  100.times do
+  20.times do
     movie = movies.sample
     Movie.create!(
       title: movie[:title],
@@ -82,3 +83,8 @@ if Movie.count < 100
     )
   end
 end
+
+Rails.logger.info "Creating comments..."
+
+Rake.application['comments:remove'].invoke
+Rake.application['comments:create'].invoke

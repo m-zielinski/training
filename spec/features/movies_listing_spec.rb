@@ -23,7 +23,7 @@ feature "showing movies with full data", :js do
     expect(page).to have_text("Godfather")
       .and have_text("The aging patriarch...")
       .and have_text("9.2")
-    expect(page.find(".poster")["src"]).to have_content "godfather.jpg"
+    expect(page.find(".poster", match: :first)["src"]).to have_content "godfather.jpg"
   end
 
   def expect_additional_fields_on_page
